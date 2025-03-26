@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflix</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Inflix</div>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#trending">Trending</a></li>
+                <li><a href="#action">Action</a></li>
+                <li><a href="#drama">Drama</a></li>
+                <li><a href="#comedy">Comedy</a></li>
+            </ul>
+        </nav>
+        <div class="user-profile">
+            <img src="/assets/user1.jpg" alt="User">
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            
+            <h1>Stranger Things</h1>
+            <p>A group of kids uncover a mystery involving secret experiments and terrifying supernatural forces.</p>
+            <div class="buttons">
+                <button class="play" onclick="playTrailer()">▶ Play</button>
+                <button class="more-info" onclick="showInfo()">i More Info</button>
+            </div>
+        </div>
+
+       
+    </section>
+
+    <!-- Movies Grid Section -->
+    <div class="movies-container">
+
+        <!-- Trending Now -->
+        <div class="movies-section" id="trending">
+            <h2>Trending Now</h2>
+            <div class="movies-grid">
+                <div class="movie-item">
+                    <img src="./assets/T1.png" alt="Movie" onclick="openWebsite('T1')">
+                    <p id="title-T1"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/T2.png" alt="Movie" onclick="openWebsite('T2')">
+                    <p id="title-T2"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/T3.png" alt="Movie" onclick="openWebsite('T3')">
+                    <p id="title-T3"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/T4.png" alt="Movie" onclick="openWebsite('T4')">
+                    <p id="title-T4"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/T5.png" alt="Movie" onclick="openWebsite('T5')">
+                    <p id="title-T5"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action -->
+        <div class="movies-section" id="action">
+            <h2>Action</h2>
+            <div class="movies-grid">
+                <div class="movie-item">
+                    <img src="./assets/A1.png" alt="Movie" onclick="openWebsite('A1')">
+                    <p id="title-A1"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/A2.jpg" alt="Movie" onclick="openWebsite('A2')">
+                    <p id="title-A2"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/A3.jpg" alt="Movie" onclick="openWebsite('A3')">
+                    <p id="title-A3"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/A4.png" alt="Movie" onclick="openWebsite('A4')">
+                    <p id="title-A4"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/A5.jpg" alt="Movie" onclick="openWebsite('A5')">
+                    <p id="title-A5"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drama -->
+        <div class="movies-section" id="drama">
+            <h2>Drama</h2>
+            <div class="movies-grid">
+                <div class="movie-item">
+                    <img src="./assets/D1.png" alt="Movie" onclick="openWebsite('D1')">
+                    <p id="title-D1"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/D2.png" alt="Movie" onclick="openWebsite('D2')">
+                    <p id="title-D2"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/D3.png" alt="Movie" onclick="openWebsite('D3')">
+                    <p id="title-D3"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/D4.png" alt="Movie" onclick="openWebsite('D4')">
+                    <p id="title-D4"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/D5.png" alt="Movie" onclick="openWebsite('D5')">
+                    <p id="title-D5"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comedy -->
+        <div class="movies-section" id="comedy">
+            <h2>Comedy</h2>
+            <div class="movies-grid">
+                <div class="movie-item">
+                    <img src="./assets/C1.png" alt="Movie" onclick="openWebsite('C1')">
+                    <p id="title-C1"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/C2.png" alt="Movie" onclick="openWebsite('C2')">
+                    <p id="title-C2"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/C3.png" alt="Movie" onclick="openWebsite('C3')">
+                    <p id="title-C3"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/C4.png" alt="Movie" onclick="openWebsite('C4')">
+                    <p id="title-C4"></p>
+                </div>
+                <div class="movie-item">
+                    <img src="./assets/C5.png" alt="Movie" onclick="openWebsite('C5')">
+                    <p id="title-C5"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Set movie titles
+        document.querySelectorAll('.movie-item img').forEach(img => {
+            const imageId = img.getAttribute('onclick').match(/'([^']+)'/)[1];
+            const titleElement = document.getElementById(`title-${imageId}`);
+            if (titleElement) {
+                titleElement.textContent = getMovieTitle(imageId);
+            }
+        });
+    </script>
+
+</body>
+</html>
