@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inflix</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
 
@@ -28,16 +28,13 @@
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            
-            <h1>Stranger Things</h1>
+                        <h1>Stranger Things</h1>
             <p>A group of kids uncover a mystery involving secret experiments and terrifying supernatural forces.</p>
             <div class="buttons">
                 <button class="play" onclick="playTrailer()">▶ Play</button>
                 <button class="more-info" onclick="showInfo()">i More Info</button>
             </div>
         </div>
-
-       
     </section>
 
     <!-- Movies Grid Section -->
@@ -149,18 +146,46 @@
                     <p id="title-C5"></p>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+        </div>    
     <script>
-        // Set movie titles
+        function playTrailer() {
+            fetch('/play-trailer')
+                .then(response => response.json())
+                .then(data => window.open(data.url, '_blank'))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function showInfo() {
+            fetch('/show-info')
+                .then(response => response.json())
+                .then(data => window.open(data.url, '_blank'))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function openWebsite(imageId) {
+            fetch(`/get-url/${imageId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.url) {
+                        window.open(data.url, '_blank');
+                    } else {
+                        console.error('Error:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
         document.querySelectorAll('.movie-item img').forEach(img => {
             const imageId = img.getAttribute('onclick').match(/'([^']+)'/)[1];
+fetch(`/get-title/${imageId}`)
+                .then(response => response.json())
+                .then(data => {
             const titleElement = document.getElementById(`title-${imageId}`);
             if (titleElement) {
-                titleElement.textContent = getMovieTitle(imageId);
+                titleElement.textContent = data.title || 'Unknown Title';
             }
+})
+                .catch(error => console.error('Error:', error));
         });
     </script>
 

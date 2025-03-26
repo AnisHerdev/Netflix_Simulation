@@ -1,16 +1,9 @@
-// Play Trailer Button
-function playTrailer() {
-    window.open("https://www.youtube.com/watch?v=b9EkMc79ZSU", "_blank");
-}
+from flask import Flask, render_template, jsonify, request
 
-// More Info Button
-function showInfo() {
-    window.open("https://en.wikipedia.org/wiki/Stranger_Things", "_blank");
-    // alert("Stranger Things: A group of kids uncover a mystery involving secret experiments and supernatural forces.");
-}
+app = Flask(__name__, static_folder='.', static_url_path='', template_folder='.')
 
-// URLs for each image
-const urls = {
+# URLs for each image
+urls = {
     'T1': 'https://example.com/trending1',
     'T2': 'https://example.com/trending2',
     'T3': 'https://example.com/trending3',
@@ -31,10 +24,10 @@ const urls = {
     'C3': 'https://example.com/comedy3',
     'C4': 'https://example.com/comedy4',
     'C5': 'https://example.com/comedy5'
-};
+}
 
-// Titles for each image
-const titles = {
+# Titles for each image
+titles = {
     'T1': 'Pushpa 2',
     'T2': 'Trending Movie 2',
     'T3': 'Trending Movie 3',
@@ -55,29 +48,33 @@ const titles = {
     'C3': 'Comedy Movie 3',
     'C4': 'Comedy Movie 4',
     'C5': 'Comedy Movie 5'
-};
-
-// Image Click Handler
-function openWebsite(imageId) {
-    const url = urls[imageId];
-    if (url) {
-        window.open(url, "_blank");
-    } else {
-        console.error('URL not found for image ID:', imageId);
-    }
 }
 
-// Function to get movie title
-function getMovieTitle(imageId) {
-    return titles[imageId] || 'Unknown Title';
-}
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-// Smooth Scrolling for Navbar Links
-document.querySelectorAll('nav ul li a').forEach(anchor => {
-    anchor.addEventListener('click', function (event) {
-        event.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
+@app.route('/play-trailer', methods=['GET'])
+def play_trailer():
+    return jsonify({'url': 'https://www.youtube.com/watch?v=b9EkMc79ZSU'})
+
+@app.route('/show-info', methods=['GET'])
+def show_info():
+    return jsonify({'url': 'https://en.wikipedia.org/wiki/Stranger_Things'})
+
+@app.route('/get-url/<image_id>', methods=['GET'])
+def get_url(image_id):
+    url = urls.get(image_id)
+    if url:
+        return jsonify({'url': url})
+    return jsonify({'error': 'URL not found'}), 404
+
+@app.route('/get-title/<image_id>', methods=['GET'])
+def get_title(image_id):
+    title = titles.get(image_id)
+    if title:
+        return jsonify({'title': title})
+    return jsonify({'error': 'Title not found'}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
