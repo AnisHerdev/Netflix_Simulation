@@ -3,7 +3,7 @@ This module implements the backend for the Netflix-inspired frontend project.
 It includes routes for playing trailers, showing movie info, and retrieving movie details.
 """
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, jsonify
 
 app = Flask(__name__, static_folder='.', static_url_path='', template_folder='.')
 
