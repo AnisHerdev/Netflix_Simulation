@@ -28,7 +28,7 @@ jobs:
 
     - name: Run pylint
       run: |
-        pylint test_app.py
+        pylint test_app.py app.py
 
     - name: Run unit tests
       run: |
