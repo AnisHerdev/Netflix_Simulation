@@ -1,3 +1,8 @@
+"""
+This module implements the backend for the Netflix-inspired frontend project.
+It includes routes for playing trailers, showing movie info, and retrieving movie details.
+"""
+
 from flask import Flask, render_template, jsonify
 
 app = Flask(__name__, static_folder='.', static_url_path='', template_folder='.')
@@ -52,18 +57,30 @@ titles = {
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    """Render the homepage."""
+    return "Welcome to Inflix!"
 
 @app.route('/play-trailer', methods=['GET'])
 def play_trailer():
+    """Play the trailer for the featured movie."""
     return jsonify({'url': 'https://www.youtube.com/watch?v=b9EkMc79ZSU'})
 
 @app.route('/show-info', methods=['GET'])
 def show_info():
+    """Show additional information about the featured movie."""
     return jsonify({'url': 'https://en.wikipedia.org/wiki/Stranger_Things'})
 
 @app.route('/get-url/<image_id>', methods=['GET'])
 def get_url(image_id):
+    """
+    Retrieve the URL for a specific movie.
+
+    Args:
+        image_id (str): The ID of the movie.
+
+    Returns:
+        str: The URL of the movie or a 404 error if not found.
+    """
     url = urls.get(image_id)
     if url:
         return jsonify({'url': url})
@@ -71,6 +88,15 @@ def get_url(image_id):
 
 @app.route('/get-title/<image_id>', methods=['GET'])
 def get_title(image_id):
+    """
+    Retrieve the title for a specific movie.
+
+    Args:
+        image_id (str): The ID of the movie.
+
+    Returns:
+        str: The title of the movie or a 404 error if not found.
+    """
     title = titles.get(image_id)
     if title:
         return jsonify({'title': title})
